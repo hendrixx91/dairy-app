@@ -223,7 +223,7 @@ for(let day=1;day<=lastDate;day++){
 const dateStr = formatDate(year,month+1,day);
 
 const d=document.createElement("div");
-d.dateset.date=dateStr;
+d.dateset.date = dateStr;
 d.innerText=day;
 d.className="day";
 
@@ -251,7 +251,7 @@ setTimeout(scrollToToday, 100);
 function selectDate(dateStr,el){
 selectedDate=dateStr;
 
-localStrage.setItem( "lastDate", dateStr);
+localStrage.setItem("lastDate", dateStr);
   
 document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
 el.classList.add("selected");
