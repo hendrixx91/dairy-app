@@ -275,20 +275,20 @@ const lastDate = localStorage.getItem("lastDate");
 let target = null;
 
 if (lastDate) {
-target = document.querySelector(`[data-date="${lastDate}"]`);
+target = document.querySelector('[data-date="' + lastDate + '"]');
 }
 
 if (!target) {
 target = document.querySelector(".today");
 }
 
-if (target) {
+if (!target) return; // ←これ超重要（エラー防止）
+
 const container = document.getElementById("calendar");
 
 container.scrollTop = target.offsetTop - container.clientHeight / 2;
 
 target.click();
-}
 }
   
 function toggleDarkMode() {
