@@ -250,6 +250,8 @@ setTimeout(scrollToToday, 100);
 function selectDate(dateStr,el){
 selectedDate=dateStr;
 
+localStrage.setItem( "lastDate", dateStr);
+  
 document.querySelectorAll(".day").forEach(d=>d.classList.remove("selected"));
 el.classList.add("selected");
 
@@ -267,13 +269,27 @@ generateCalendar();
 }
 
 function scrollToToday(){
-const el=document.querySelector(".today");
-if(el){
-el.scrollIntoView({behavior:"smooth",block:"center"});
+const lastDate = localStorage.getItem("lastDate");
+
+if (lastDate) {
+const el = [...document.querySelectorAll(".day")]
+.find(d => d.onclick && d.onclick.toString().includes(lastDate));
+
+if (el) {
+el.scrollIntoView({block:"center"});
 el.click();
+return;
 }
 }
 
+// なければ今日
+const todayEl = document.querySelector(".today");
+if (todayEl) {
+todayEl.scrollIntoView({block:"center"});
+todayEl.click();
+}
+}
+  
 function toggleDarkMode() {
 document.body.classList.toggle("dark");
 
