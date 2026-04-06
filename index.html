@@ -271,22 +271,23 @@ generateCalendar();
 function scrollToToday(){
 const lastDate = localStorage.getItem("lastDate");
 
+let target = null;
+
 if (lastDate) {
-const el = [...document.querySelectorAll(".day")]
+target = [...document.querySelectorAll(".day")]
 .find(d => d.onclick && d.onclick.toString().includes(lastDate));
-
-if (el) {
-el.scrollIntoView({block:"center"});
-el.click();
-return;
-}
 }
 
-// なければ今日
-const todayEl = document.querySelector(".today");
-if (todayEl) {
-todayEl.scrollIntoView({block:"center"});
-todayEl.click();
+if (!target) {
+target = document.querySelector(".today");
+}
+
+if (target) {
+// 👇 ここがポイント（スクロール位置を直接指定）
+const container = document.getElementById("calendar");
+container.scrollTop = target.offsetTop - container.clientHeight / 2;
+
+target.click();
 }
 }
   
