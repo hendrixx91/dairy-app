@@ -223,6 +223,7 @@ for(let day=1;day<=lastDate;day++){
 const dateStr = formatDate(year,month+1,day);
 
 const d=document.createElement("div");
+d.dateset.date=dateStr;
 d.innerText=day;
 d.className="day";
 
@@ -274,8 +275,7 @@ const lastDate = localStorage.getItem("lastDate");
 let target = null;
 
 if (lastDate) {
-target = [...document.querySelectorAll(".day")]
-.find(d => d.onclick && d.onclick.toString().includes(lastDate));
+target = document.querySelector(`[data-date="${lastDate}"]`);
 }
 
 if (!target) {
@@ -283,8 +283,8 @@ target = document.querySelector(".today");
 }
 
 if (target) {
-// 👇 ここがポイント（スクロール位置を直接指定）
 const container = document.getElementById("calendar");
+
 container.scrollTop = target.offsetTop - container.clientHeight / 2;
 
 target.click();
