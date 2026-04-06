@@ -284,6 +284,10 @@ localStorage.setItem("darkMode", "off");
 }
 }
 
+if (localStorage.getItem("darkMode") === "on") {
+document.body.classList.add("dark");
+}
+
 // 起動
 generateCalendar();
 </script>
