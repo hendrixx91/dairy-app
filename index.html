@@ -123,7 +123,7 @@ width: 100%;
 height: 60%;
 font-size: 16px;
 padding: 15px;
-line-height: 2.0;
+line-height: 1.9;
 border-radius: 10px;
 border: 1px solid #ccc;
 resize: none;
@@ -274,7 +274,7 @@ el.click();
 }
 }
 
-function toggleDarkMode(){
+function toggleDarkMode() {
 document.body.classList.toggle("dark");
 
 if (document.body.classList.contains("dark")) {
@@ -289,6 +289,7 @@ document.body.classList.add("dark");
 }
 
 // 起動
+loadDarkMode();
 generateCalendar();
 </script>
 
