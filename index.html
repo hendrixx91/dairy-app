@@ -156,6 +156,12 @@ background: #f0f4ff;
 body.dark .result-item:hover {
 background: #444;
 }
+
+ .day.anniversary {
+background: #ffd700;
+color: #000;
+font-weight: bold;
+}
 </style>
 </head>
 
@@ -238,6 +244,12 @@ if(dateStr===todayStr){
 d.classList.add("today");
 }
 
+// ⭐ 記念日（毎年4/7）
+if ((month + 1 === 4) && day === 7) {
+d.classList.add("anniversary");
+d.innerHTML = "⭐<br>" + day;
+}
+  
 if(localStorage.getItem(dateStr)){
 d.classList.add("has-diary");
 }
