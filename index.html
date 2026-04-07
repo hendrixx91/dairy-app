@@ -357,9 +357,19 @@ resultsDiv.appendChild(div);
 }
 }
 
+location.reload();
   
 generateCalendar();
 </script>
 
+<script>
+const version = "1.1"; // ←ここ変える
+
+if (localStorage.getItem("appVersion") !== version) {
+localStorage.setItem("appVersion", version);
+location.reload(true);
+}
+</script>
+  
 </body>
 </html>
