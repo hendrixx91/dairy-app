@@ -97,7 +97,7 @@ width: 67%;
 padding: 30px;
 box-sizing: border-box;
 }
-
+  
 textarea {
 width: 100%;
 height: 60%;
@@ -127,6 +127,35 @@ background: #4f7cff;
 color: white;
 cursor: pointer;
 }
+
+#search {
+width: 100%;
+padding: 10px;
+margin-bottom: 10px;
+font-size: 14px;
+border-radius: 8px;
+border: 1px solid #ccc;
+}
+
+#search-results {
+max-height: 200px;
+overflow-y: auto;
+margin-bottom: 10px;
+}
+
+.result-item {
+padding: 8px;
+border-bottom: 1px solid #eee;
+cursor: pointer;
+}
+
+.result-item:hover {
+background: #f0f4ff;
+}
+
+body.dark .result-item:hover {
+background: #444;
+}
 </style>
 </head>
 
@@ -136,6 +165,8 @@ cursor: pointer;
 
 <div id="content">
 <h2 id="selected-date">日付を選択</h2>
+<input type="text" id="search" placeholder="検索..." oninput="searchDiary()">
+<div id="search-results"></div>
 <textarea id="diary"></textarea><br>
 
 <button onclick="saveDiary()">保存</button>
@@ -279,6 +310,54 @@ if (localStorage.getItem("darkMode") === "on") {
 document.body.classList.add("dark");
 }
 
+function searchDiary(){
+const keyword = document.getElementById("search").value.trim();
+const resultsDiv = document.getElementById("search-results");
+
+resultsDiv.innerHTML = "";
+
+if (!keyword) return;
+
+for (let i = 0; i < localStorage.length; i++) {
+const key = localStorage.key(i);
+
+// 日付だけ対象（YYYY-MM-DD）
+if (!key.match(/^\d{4}-\d{2}-\d{2}$/)) continue;
+
+const text = localStorage.getItem(key);
+
+if (text && text.includes(keyword)) {
+
+const index = text.indexOf(keyword);
+const start = Math.max(0, index - 10);
+const end = Math.min(text.length, index + 20);
+
+let preview = text.substring(start, end);
+
+// ハイライト
+preview = preview.replace(keyword, `<b>${keyword}</b>`);
+
+const div = document.createElement("div");
+div.className = "result-item";
+
+div.innerHTML = `
+<div><strong>${key}</strong></div>
+<div>${preview}...</div>
+`;
+
+div.onclick = () => {
+const el = document.querySelector('[data-date="' + key + '"]');
+if (el) {
+el.click();
+}
+};
+
+resultsDiv.appendChild(div);
+}
+}
+}
+
+  
 generateCalendar();
 </script>
 
