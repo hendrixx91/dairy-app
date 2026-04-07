@@ -363,11 +363,17 @@ generateCalendar();
 </script>
 
 <script>
-const version = "1.2"; // ←ここ変える
+const version = "1.2";
 
-if (localStorage.getItem("appVersion") !== version) {
+const savedVersion = localStorage.getItem("appVersion");
+
+if (savedVersion !== version) {
 localStorage.setItem("appVersion", version);
-location.reload(true);
+
+// 初回じゃなければリロード
+if (savedVersion !== null) {
+location.reload();
+}
 }
 </script>
   
