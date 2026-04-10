@@ -167,7 +167,7 @@ background: #444;
 <h2 id="selected-date">日付を選択</h2>
 <input type="text" id="search" placeholder="検索..." oninput="searchDiary()">
 <div id="search-results"></div>
-<textarea id="diary"></textarea><br>
+<textarea id="diary" oninput="autoSave()"></textarea><br>
 
 <button onclick="saveDiary()">保存</button>
 <button onclick="toggleDarkMode()">🌙 ダークモード</button>
@@ -261,7 +261,12 @@ calendar.appendChild(monthDiv);
 setTimeout(scrollToToday, 50);
 }
 
-function selectDate(dateStr,el){
+function selectDate(dateStr,el){　
+
+  if (selectedDate) {
+    localStorage.setItem(selectedDate, diaryInput.value);
+  }
+  
 selectedDate=dateStr;
 
 localStorage.setItem("lastDate", dateStr);
@@ -366,6 +371,11 @@ resultsDiv.appendChild(div);
 
 function forceUpdate(){
   location.href = location.pathname + "?v=" + Date.now();
+}
+
+function autoSave(){
+  if (!selectedDate) return;
+  localStorage.setItem(selectedDate, diaryInput.value);
 }
   
 generateCalendar();
